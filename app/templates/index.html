@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socrates Shop Store - Trang chủ</title>
+    <style>
+        :root {
+            --primary-color: #003366;
+            --accent-color: #00aaff;
+            --bg-color: #f4f7f6;
+            --text-dark: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+        }
+
+        header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 1px; }
+
+        .hero {
+            background: linear-gradient(135deg, #003366 0%, #0055aa 100%);
+            color: white;
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid #eee;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-body { padding: 20px; text-align: center; }
+
+        .price {
+            font-size: 1.25rem;
+            color: #e63946;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        button:hover { background: var(--accent-color); }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: #222;
+            color: #888;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='socrates.jpg') }}" alt="Socrates Logo" style="height: 40px; vertical-align: middle; margin-right: 10px;">
+        SOCRATES SHOP
+    </div>
+    <div>Giỏ hàng (<span id="cart-count">0</span>)</div>
+</header>
+
+    <section class="hero">

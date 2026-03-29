@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: group17
+      MYSQL_DATABASE: shop_db
+    volumes:
+      - ./app/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql_data:/var/lib/mysql
+    networks:
+      - shop-network
+
+  web:
+    build: ./app
+    container_name: flask_app
+    restart: always
+    ports:
+      - "8080:5000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=uit_password
+      - DB_NAME=shop_db
+    depends_on:
+      - db
+    networks:
+      - shop-network
+
+volumes:
+  mysql_data:
+
+networks:
+  shop-network:
+    driver: bridge
