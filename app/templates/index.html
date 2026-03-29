@@ -3,95 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socrates Shop Store - Trang chủ</title>
+    <title>Socrates Shop</title>
     <style>
+        /* --- 1. Reset & Biến màu sắc (UIT Blue style) --- */
         :root {
-            --primary-color: #003366;
-            --accent-color: #00aaff;
-            --bg-color: #f4f7f6;
-            --text-dark: #333;
+            --primary-color: #003366; /* Màu xanh đậm Socrates */
+            --accent-color: #00aaff;  /* Màu xanh nhạt điểm nhấn */
+            --bg-color: #f4f7f6;      /* Màu nền xám nhạt */
+            --text-dark: #333;        /* Màu chữ tối */
+            --text-light: #fff;       /* Màu chữ sáng */
+            --card-bg: #fff;          /* Màu nền thẻ sản phẩm */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
             background-color: var(--bg-color);
             color: var(--text-dark);
+            line-height: 1.6;
         }
 
+        /* --- 2. Thanh điều hướng (Header) --- */
         header {
-            background: var(--primary-color);
-            color: white;
+            background-color: var(--primary-color);
+            color: var(--text-light);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 1px; }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
 
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .cart-status {
+            font-size: 1rem;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        #cart-count {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        /* --- 3. Banner chính (Hero Section) --- */
         .hero {
-            background: linear-gradient(135deg, #003366 0%, #0055aa 100%);
-            color: white;
-            padding: 60px 5%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0055aa 100%);
+            color: var(--text-light);
+            padding: 80px 5%;
             text-align: center;
+            box-shadow: inset 0 -5px 15px rgba(0,0,0,0.1);
         }
 
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- 4. Khu vực Sản phẩm (Main Content) --- */
         .container {
             max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        /* Lưới sản phẩm (Responsive Grid) */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
         }
 
+        /* --- 5. Thẻ sản phẩm (Product Card) --- */
         .card {
-            background: white;
+            background-color: var(--card-bg);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
         }
 
+        /* Hiệu ứng khi di chuột qua */
         .card:hover {
             transform: translateY(-10px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
-        .card-body { padding: 20px; text-align: center; }
+        .card-image {
+            height: 200px;
+            background-color: #eaeaea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4rem;
+            color: #aaa;
+        }
+
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-body h3 {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            height: 2.8rem; /* Giới hạn chiều cao tiêu đề */
+            overflow: hidden;
+        }
 
         .price {
-            font-size: 1.25rem;
-            color: #e63946;
+            font-size: 1.4rem;
+            color: #e63946; /* Màu đỏ giá tiền */
             font-weight: bold;
             margin: 15px 0;
         }
 
-        button {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.3s;
+        .card-footer {
+            margin-top: auto;
         }
 
-        button:hover { background: var(--accent-color); }
+        /* Nút Mua ngay */
+        .btn-buy {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
 
+        .btn-buy:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* --- 6. Chân trang (Footer) --- */
         footer {
             text-align: center;
             padding: 40px;
-            background: #222;
+            background-color: #222;
             color: #888;
             margin-top: 60px;
+        }
+
+        footer small {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        /* --- 7. Responsive (Cho điện thoại) --- */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2rem; }
+            .product-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -99,10 +221,69 @@
 
 <header>
     <div class="logo">
-        <img src="{{ url_for('static', filename='socrates.jpg') }}" alt="Socrates Logo" style="height: 40px; vertical-align: middle; margin-right: 10px;">
-        SOCRATES SHOP
+        <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+            <img src="{{ url_for('static', filename='socrates.jpg') }}" 
+                 alt="Socrates Logo" 
+                 style="height: 45px; width: auto; margin-right: 12px; border-radius: 5px;">
+            <span>SOCRATES SHOP</span>
+        </a>
     </div>
-    <div>Giỏ hàng (<span id="cart-count">0</span>)</div>
+
+    <div class="cart-status">
+        Giỏ hàng: <span id="cart-count">0</span> sản phẩm
+    </div>
 </header>
 
     <section class="hero">
+        <h1>Thiết bị Chuyên dụng</h1>
+        <p>Khám phá bộ sưu tập công nghệ mới nhất.</p>
+    </section>
+
+    <div class="container">
+        <h2 class="section-title">Sản phẩm nổi bật</h2>
+        
+        <div class="product-grid">
+            {% if products %}
+                {% for p in products %}
+                    <div class="card">
+                        <div class="card-image">
+                        <img src="{{ url_for('static', filename=p.image_url) }}" 
+                            alt="{{ p.name }}" 
+                            style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
+                    </div>
+                    <div class="card-body">
+                        <h3>{{ p.name }}</h3>
+                        <p class="price">{{ p.price }}</p>
+                        <div class="card-footer">
+                            <button class="btn-buy" onclick="addToCart('{{ p.name }}')">MUA NGAY</button>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+            {% else %}
+                <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: #eee; border-radius: 10px;">
+                    <h3>Chưa có sản phẩm nào được mở bán.</h3>
+                    <p>Vui lòng kiểm tra lại kết nối Database hoặc file init.sql.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Socrates Shop - Dự án sinh viên UIT</p>
+        <p>Hệ thống được đóng gói hoàn toàn bằng Docker Container.</p>
+        <small>Secured by Design | Coded by therealseno</small>
+    </footer>
+
+    <script>
+        let count = 0;
+        function addToCart(productName) {
+            count++;
+            document.getElementById('cart-count').innerText = count;
+            alert(`Đã thêm "${productName}" vào giỏ hàng thành công!`);
+            console.log(`Giỏ hàng: ${count} sản phẩm.`);
+        }
+    </script>
+</body>
+</html>

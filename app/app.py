@@ -11,7 +11,8 @@ def get_db_connection():
                 host='db',
                 user='root',
                 password='group17',
-                database='shop_db'
+                database='shop_db',
+                charset='utf8mb4'
             )
             return conn
         except:
@@ -19,13 +20,16 @@ def get_db_connection():
 
 @app.route('/')
 def index():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM products')
-    products = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return render_template('index.html', products=products)
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute('SELECT * FROM products')
+        products = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template('index.html', products=products)
+    except Exception as e:
+        return f"Lỗi kết nối Database: {e}"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
