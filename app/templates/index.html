@@ -3,287 +3,405 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socrates Shop</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Socrates Shop - UIT Project</title>
     <style>
-        /* --- 1. Reset & Biến màu sắc (UIT Blue style) --- */
+        /* --- 1. BIẾN MÀU SẮC & CẤU HÌNH CHUNG --- */
         :root {
-            --primary-color: #003366; /* Màu xanh đậm Socrates */
-            --accent-color: #00aaff;  /* Màu xanh nhạt điểm nhấn */
-            --bg-color: #f4f7f6;      /* Màu nền xám nhạt */
-            --text-dark: #333;        /* Màu chữ tối */
-            --text-light: #fff;       /* Màu chữ sáng */
-            --card-bg: #fff;          /* Màu nền thẻ sản phẩm */
+            --primary-color: #003366;
+            --accent-color: #00aaff;
+            --bg-color: #f4f7f6;
+            --text-light: #fff;
+            --danger: #e63946;
+            --success: #28a745;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-color); line-height: 1.6; }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
-
-        /* --- 2. Thanh điều hướng (Header) --- */
+        /* --- 2. HEADER --- */
         header {
-            background-color: var(--primary-color);
+            background: var(--primary-color);
             color: var(--text-light);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: sticky; top: 0; z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-        }
-
+        .logo { display: flex; align-items: center; cursor: pointer; font-weight: bold; font-size: 1.5rem; }
         .logo img {
-            height: 40px;
-            margin-right: 10px;
+            height: 45px; margin-right: 12px; border-radius: 5px;
+            /* Fallback nếu ảnh không load */
+            background: #00aaff;
         }
 
-        .cart-status {
-            font-size: 1rem;
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+
+        .auth-zone { font-size: 0.9rem; }
+        .auth-zone button {
             background: rgba(255,255,255,0.1);
-            padding: 8px 15px;
-            border-radius: 20px;
+            color: white; border: 1px solid white;
+            padding: 6px 15px; border-radius: 5px; cursor: pointer; margin-left: 5px;
+        }
+        .auth-zone button:hover { background: white; color: var(--primary-color); }
+
+        .cart-trigger {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 18px; border-radius: 20px; cursor: pointer;
+            border: 1px solid var(--accent-color);
+            white-space: nowrap;
         }
 
-        #cart-count {
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-
-        /* --- 3. Banner chính (Hero Section) --- */
+        /* --- 3. HERO --- */
         .hero {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #0055aa 100%);
-            color: var(--text-light);
-            padding: 80px 5%;
-            text-align: center;
-            box-shadow: inset 0 -5px 15px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, var(--primary-color) 0%, #005599 100%);
+            color: white; padding: 70px 5%; text-align: center;
         }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 12px; }
+        .hero p { font-size: 1.1rem; opacity: 0.85; }
 
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
+        /* --- 4. PRODUCT GRID --- */
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .section-title { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); margin-bottom: 25px; }
 
-        .hero p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
 
-        /* --- 4. Khu vực Sản phẩm (Main Content) --- */
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--accent-color);
-        }
-
-        /* Lưới sản phẩm (Responsive Grid) */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        /* --- 5. Thẻ sản phẩm (Product Card) --- */
         .card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #eee;
-            display: flex;
-            flex-direction: column;
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            display: flex; flex-direction: column; transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+
+        .card-img {
+            height: 200px; background: #f0f4f8; padding: 20px;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .card-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        /* Placeholder khi ảnh lỗi */
+        .card-img img.img-error {
+            display: none;
+        }
+        .img-placeholder {
+            width: 80px; height: 80px; background: #dde4ed;
+            border-radius: 12px; display: flex; align-items: center;
+            justify-content: center; font-size: 2.5rem;
         }
 
-        /* Hiệu ứng khi di chuột qua */
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .card-image {
-            height: 200px;
-            background-color: #eaeaea;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 4rem;
-            color: #aaa;
-        }
-
-        .card-body {
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card-body h3 {
-            font-size: 1.3rem;
-            color: var(--text-dark);
-            margin-bottom: 10px;
-            height: 2.8rem; /* Giới hạn chiều cao tiêu đề */
-            overflow: hidden;
-        }
-
-        .price {
-            font-size: 1.4rem;
-            color: #e63946; /* Màu đỏ giá tiền */
-            font-weight: bold;
-            margin: 15px 0;
-        }
-
-        .card-footer {
-            margin-top: auto;
-        }
-
-        /* Nút Mua ngay */
+        .card-body { padding: 20px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
+        .card-body h3 { font-size: 1.1rem; color: #222; }
+        .price { color: var(--danger); font-size: 1.3rem; font-weight: bold; }
         .btn-buy {
-            width: 100%;
-            background-color: var(--primary-color);
-            color: var(--text-light);
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: background-color 0.3s;
+            width: 100%; background: var(--primary-color); color: white;
+            border: none; padding: 12px; border-radius: 8px; cursor: pointer;
+            font-weight: bold; font-size: 0.95rem; margin-top: 8px;
+            transition: background 0.2s;
+        }
+        .btn-buy:hover { background: #004a99; }
+
+        /* --- 5. SIDEBAR GIỎ HÀNG --- */
+        #cart-sidebar {
+            position: fixed; right: -400px; top: 0; width: 380px; height: 100%;
+            background: white; z-index: 2000; padding: 25px; transition: 0.4s;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.15); display: flex; flex-direction: column;
+        }
+        #cart-sidebar.active { right: 0; }
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1500; display: none;
         }
 
-        .btn-buy:hover {
-            background-color: var(--accent-color);
+        /* --- 6. MODAL ĐĂNG NHẬP --- */
+        .modal {
+            display: none; position: fixed; z-index: 3000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            align-items: center; justify-content: center;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            background: white; width: 360px; padding: 35px;
+            border-radius: 12px; text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .modal-content h2 { margin-bottom: 20px; color: var(--primary-color); }
+        .modal-content input {
+            width: 100%; padding: 11px 14px; margin: 8px 0;
+            border: 1.5px solid #ddd; border-radius: 8px;
+            font-size: 0.95rem; outline: none; transition: border 0.2s;
+        }
+        .modal-content input:focus { border-color: var(--accent-color); }
+        .modal-content .btn-cancel {
+            background: none; border: none; margin-top: 12px;
+            cursor: pointer; color: #888; font-size: 0.9rem;
         }
 
-        /* --- 6. Chân trang (Footer) --- */
+        /* --- 7. FOOTER --- */
         footer {
-            text-align: center;
-            padding: 40px;
-            background-color: #222;
-            color: #888;
+            background: var(--primary-color);
+            color: rgba(255,255,255,0.85);
+            padding: 40px 5% 20px;
             margin-top: 60px;
         }
-
-        footer small {
-            display: block;
-            margin-top: 10px;
-            color: #555;
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
         }
-
-        /* --- 7. Responsive (Cho điện thoại) --- */
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 2rem; }
-            .product-grid { grid-template-columns: 1fr; }
+        .footer-col h4 {
+            color: var(--accent-color);
+            font-size: 1rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .footer-col p, .footer-col a {
+            font-size: 0.88rem;
+            line-height: 2;
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            display: block;
+        }
+        .footer-col a:hover { color: white; }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 18px;
+            text-align: center;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.5);
+            max-width: 1200px;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
-    <div class="logo">
-        <a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
-            <img src="{{ url_for('static', filename='socrates.jpg') }}" 
-                 alt="Socrates Logo" 
-                 style="height: 45px; width: auto; margin-right: 12px; border-radius: 5px;">
-            <span>SOCRATES SHOP</span>
-        </a>
+    <div class="logo" onclick="location.reload()">
+        <img src="{{ url_for('static', filename='images/socrates.jpg') }}"
+             alt="Logo"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div style="display:none; width:40px; height:40px; background:#00aaff; border-radius:8px; align-items:center; justify-content:center; margin-right:12px; font-size:1.2rem;">🏪</div>
+        <span>SOCRATES SHOP</span>
     </div>
 
-    <div class="cart-status">
-        Giỏ hàng: <span id="cart-count">0</span> sản phẩm
+    <div class="nav-right">
+        <div class="auth-zone">
+            {% if user %}
+                <span>Chào, <b>{{ user }}</b></span> |
+                <a href="/logout" style="color:white; text-decoration:none;">Đăng xuất</a>
+            {% else %}
+                <button onclick="showAuth('login')">Đăng nhập</button>
+                <button onclick="showAuth('register')">Đăng ký</button>
+            {% endif %}
+        </div>
+
+        <div class="cart-trigger" onclick="toggleCart()">
+            🛒 <span id="cart-count">0</span> sản phẩm
+        </div>
     </div>
 </header>
 
-    <section class="hero">
-        <h1>Thiết bị Chuyên dụng</h1>
-        <p>Khám phá bộ sưu tập công nghệ mới nhất.</p>
-    </section>
+<!-- HERO -->
+<section class="hero">
+    <h1>Thiết bị Chuyên dụng</h1>
+    <p>Khám phá bộ sưu tập công nghệ mới nhất cho sinh viên UIT.</p>
+</section>
 
-    <div class="container">
-        <h2 class="section-title">Sản phẩm nổi bật</h2>
-        
-        <div class="product-grid">
-            {% if products %}
-                {% for p in products %}
-                    <div class="card">
-                        <div class="card-image">
-                        <img src="{{ url_for('static', filename=p.image_url) }}" 
-                            alt="{{ p.name }}" 
-                            style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
-                    </div>
-                    <div class="card-body">
-                        <h3>{{ p.name }}</h3>
-                        <p class="price">{{ p.price }}</p>
-                        <div class="card-footer">
-                            <button class="btn-buy" onclick="addToCart('{{ p.name }}')">MUA NGAY</button>
-                        </div>
-                    </div>
+<!-- SẢN PHẨM -->
+<div class="container">
+    <p class="section-title">🛍️ Sản phẩm nổi bật</p>
+    <div class="product-grid">
+        {% if products %}
+            {% for p in products %}
+            <div class="card">
+                <div class="card-img">
+                    <img src="{{ url_for('static', filename='images/' + p.image_url) }}"
+                         alt="{{ p.name }}"
+                         onerror="this.classList.add('img-error'); this.nextElementSibling.style.display='flex'">
+                    <div class="img-placeholder" style="display:none;">📦</div>
                 </div>
+                <div class="card-body">
+                    <h3>{{ p.name }}</h3>
+                    <p class="price">{{ p.price }}</p>
+                    <button class="btn-buy" onclick="addToCart('{{ p.name }}', '{{ p.price }}')">MUA NGAY</button>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="grid-column: 1/-1; text-align: center; padding: 50px; background: #fff; border-radius: 12px;">
+                <p style="font-size:1.1rem;">⚠️ Vui lòng kiểm tra kết nối Database MySQL hoặc file init.sql...</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
 
-                {% endfor %}
-            {% else %}
-                <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: #eee; border-radius: 10px;">
-                    <h3>Chưa có sản phẩm nào được mở bán.</h3>
-                    <p>Vui lòng kiểm tra lại kết nối Database hoặc file init.sql.</p>
-                </div>
-            {% endif %}
+<!-- GIỎ HÀNG SIDEBAR -->
+<div id="cart-overlay" class="overlay" onclick="toggleCart()"></div>
+<div id="cart-sidebar">
+    <h2 style="border-bottom: 2px solid #eee; padding-bottom: 12px;">🛒 Giỏ hàng</h2>
+    <div id="cart-items" style="flex-grow: 1; overflow-y: auto; margin: 20px 0;"></div>
+    <div style="border-top: 2px solid #eee; padding-top: 15px;">
+        <p style="font-size:1rem;">Tổng tiền: <b id="cart-total" style="color: var(--danger); font-size:1.2rem;">0đ</b></p>
+        <button class="btn-buy" style="background: var(--success); margin-top:12px;" onclick="checkout()">✅ THANH TOÁN</button>
+        <button class="btn-buy" style="background: #999; margin-top:8px;" onclick="toggleCart()">ĐÓNG</button>
+    </div>
+</div>
+
+<!-- MODAL ĐĂNG NHẬP / ĐĂNG KÝ -->
+<div id="auth-modal" class="modal">
+    <div class="modal-content">
+        <h2 id="auth-title">Đăng nhập</h2>
+        <input type="text" id="auth-user" placeholder="Tên đăng nhập">
+        <input type="password" id="auth-pass" placeholder="Mật khẩu">
+        <button class="btn-buy" onclick="submitAuth()">XÁC NHẬN</button>
+        <button class="btn-cancel" onclick="closeAuth()">Hủy</button>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>Socrates Shop</h4>
+            <p>Cửa hàng thiết bị công nghệ dành riêng cho sinh viên UIT.</p>
+            <p style="margin-top:8px;">📍 Khu phố 6, Linh Trung, Thủ Đức, TP.HCM</p>
+        </div>
+        <div class="footer-col">
+            <h4>Liên kết</h4>
+            <a href="#">Trang chủ</a>
+            <a href="#">Sản phẩm</a>
+            <a href="#">Giới thiệu</a>
+            <a href="#">Liên hệ</a>
+        </div>
+        <div class="footer-col">
+            <h4>Hỗ trợ</h4>
+            <a href="#">Chính sách đổi trả</a>
+            <a href="#">Hướng dẫn mua hàng</a>
+            <a href="#">Bảo hành</a>
+        </div>
+        <div class="footer-col">
+            <h4>Liên hệ</h4>
+            <p>📧 group17@uit.edu.vn</p>
+            <p>📞 0909 999 999</p>
+            <p>🕐 8:00 – 22:00 hàng ngày</p>
         </div>
     </div>
+    <div class="footer-bottom">
+        &copy; 2025 Socrates Shop – Đồ án môn học | Trường Đại học Công nghệ Thông tin – UIT
+    </div>
+</footer>
 
-    <footer>
-        <p>&copy; 2026 Socrates Shop - Dự án sinh viên UIT</p>
-        <p>Hệ thống được đóng gói hoàn toàn bằng Docker Container.</p>
-        <small>Secured by Design | Coded by therealseno</small>
-    </footer>
+<script>
+    /* --- LOGIC GIỎ HÀNG --- */
+    let cart = JSON.parse(localStorage.getItem('socrates_cart')) || [];
 
-    <script>
-        let count = 0;
-        function addToCart(productName) {
-            count++;
-            document.getElementById('cart-count').innerText = count;
-            alert(`Đã thêm "${productName}" vào giỏ hàng thành công!`);
-            console.log(`Giỏ hàng: ${count} sản phẩm.`);
+    function toggleCart() {
+        const sidebar = document.getElementById('cart-sidebar');
+        const overlay = document.getElementById('cart-overlay');
+        sidebar.classList.toggle('active');
+        overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+        renderCart();
+    }
+
+    function addToCart(name, priceStr) {
+        const price = parseInt(priceStr.replace(/[^0-9]/g, ''));
+        const item = cart.find(i => i.name === name);
+        if (item) item.quantity++;
+        else cart.push({ name, price, quantity: 1 });
+        updateStorage();
+        alert(`Đã thêm "${name}" vào giỏ hàng!`);
+    }
+
+    function renderCart() {
+        const container = document.getElementById('cart-items');
+        if (cart.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#999; margin-top:20px;">Giỏ hàng trống...</p>';
+            document.getElementById('cart-total').innerText = '0đ';
+            return;
         }
-    </script>
+
+        let total = 0;
+        container.innerHTML = cart.map((item, idx) => {
+            total += item.price * item.quantity;
+            return `<div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #f0f0f0;">
+                <div>
+                    <div style="font-weight:600;">${item.name}</div>
+                    <div style="font-size:0.85rem; color:#888;">x${item.quantity} — ${(item.price * item.quantity).toLocaleString()}đ</div>
+                </div>
+                <button onclick="removeItem(${idx})" style="color:red; border:none; background:none; cursor:pointer; font-size:1.2rem;">✕</button>
+            </div>`;
+        }).join('');
+        document.getElementById('cart-total').innerText = total.toLocaleString() + 'đ';
+    }
+
+    function removeItem(idx) { cart.splice(idx, 1); updateStorage(); renderCart(); }
+
+    function updateStorage() {
+        localStorage.setItem('socrates_cart', JSON.stringify(cart));
+        document.getElementById('cart-count').innerText = cart.reduce((s, i) => s + i.quantity, 0);
+    }
+
+    /* --- LOGIC AUTH --- */
+    let authMode = 'login';
+
+    function showAuth(mode) {
+        authMode = mode;
+        document.getElementById('auth-title').innerText = mode === 'login' ? 'Đăng nhập' : 'Đăng ký';
+        document.getElementById('auth-modal').classList.add('show');
+    }
+
+    function closeAuth() {
+        document.getElementById('auth-modal').classList.remove('show');
+    }
+
+    // Đóng modal khi click ra ngoài
+    document.getElementById('auth-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeAuth();
+    });
+
+    async function submitAuth() {
+        const username = document.getElementById('auth-user').value.trim();
+        const password = document.getElementById('auth-pass').value.trim();
+        if (!username || !password) return alert('Vui lòng điền đủ thông tin!');
+
+        const res = await fetch('/' + authMode, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (data.status === 'success') location.reload();
+        else alert(data.message);
+    }
+
+    async function checkout() {
+        const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+        if (total === 0) return alert('Giỏ hàng trống!');
+
+        const res = await fetch('/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ total, items: cart })
+        });
+        const data = await res.json();
+        if (data.status === 'success') {
+            alert(data.message);
+            cart = []; updateStorage(); toggleCart();
+        } else {
+            alert(data.message);
+            if (data.message.includes('đăng nhập')) showAuth('login');
+        }
+    }
+
+    window.onload = updateStorage;
+</script>
 </body>
 </html>
