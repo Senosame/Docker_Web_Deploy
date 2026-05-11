@@ -26,6 +26,8 @@ services:
     restart: always
     ports:
       - "8080:5000"
+    volumes:
+      - ./app:/app
     environment:
       - DB_HOST=db
       - DB_USER=root
