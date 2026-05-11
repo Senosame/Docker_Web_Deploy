@@ -24,4 +24,4 @@ jobs:
         with:
           context: . 
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/tên_image_của_bạn:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/socrates_web:v1.2
