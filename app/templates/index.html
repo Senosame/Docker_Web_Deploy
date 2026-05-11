@@ -185,12 +185,13 @@
 <!-- HEADER -->
 <header>
     <div class="logo" onclick="location.reload()">
-        <img src="{{ url_for('static', filename='images/socrates.jpg') }}"
-             alt="Logo"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-        <div style="display:none; width:40px; height:40px; background:#00aaff; border-radius:8px; align-items:center; justify-content:center; margin-right:12px; font-size:1.2rem;">🏪</div>
-        <span>SOCRATES SHOP</span>
-    </div>
+    <img src="{{ url_for('static', filename='images/socrates.png') }}"
+         alt="Logo"
+         id="logo-img"
+         onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
+    <div id="logo-fallback" style="display:none; width:40px; height:40px; background:#00aaff; border-radius:8px; align-items:center; justify-content:center; margin-right:12px; font-size:1.2rem;">🏪</div>
+    <span>SOCRATES SHOP</span>
+</div>
 
     <div class="nav-right">
         <div class="auth-zone">
@@ -225,8 +226,7 @@
                 <div class="card-img">
                     <img src="{{ url_for('static', filename='images/' + p.image_url) }}"
                          alt="{{ p.name }}"
-                         onerror="this.classList.add('img-error'); this.nextElementSibling.style.display='flex'">
-                    <div class="img-placeholder" style="display:none;">📦</div>
+                         onerror="this.src=''; this.style.display='none';">
                 </div>
                 <div class="card-body">
                     <h3>{{ p.name }}</h3>
