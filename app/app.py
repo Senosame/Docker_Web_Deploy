@@ -1,21 +1,24 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
- 
+import os 
+
 app = Flask(__name__)
 app.secret_key = 'group17'
- 
-# Cấu hình kết nối MySQL với charset UTF-8
+
 db_config = {
-    'host': 'db',
-    'user': 'root',
-    'password': 'group17',
-    'database': 'shop_db',
-    'charset': 'utf8mb4',          # ← Fix lỗi chữ tiếng Việt
+    'host': os.environ.get('DB_HOST', 'db'),
+    'port': int(os.environ.get('DB_PORT', 3306)),
+    'user': os.environ.get('DB_USER', 'root'),
+    'password': os.environ.get('DB_PASSWORD', 'group17'),
+    'database': os.environ.get('DB_NAME', 'shop_db'),
+    'charset': 'utf8mb4',
     'collation': 'utf8mb4_unicode_ci',
     'use_unicode': True,
+    'ssl_disabled': False,      
+    'ssl_verify_cert': False   
 }
- 
+
 def get_db_connection():
     conn = mysql.connector.connect(**db_config)
     conn.set_charset_collation('utf8mb4', 'utf8mb4_unicode_ci')
